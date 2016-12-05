@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -35,10 +35,47 @@
           this.Table[posL][posH] = joueur;
         }
 
+        /*
+        * Returne True si le joueur à gagné
+        * @param {[int]} joueur Le joueur dont vous voulez vérifiez la victoire
+        * @return {[bool]}
+         */
+        CheckVictoire(joueur){
+          for (var i = 0; i < this.largeur; i++) {
+            if ((this.Table[i][0] == joueur) && (this.Table[i][1] == joueur) && (this.Table[i][2] == joueur)) {
+              return true;
+            }
+          }
+
+          for (var i = 0; i < this.hauteur; i++) {
+            if ((this.Table[0][i] == joueur) && (this.Table[1][i] == joueur) && (this.Table[2][i] == joueur)) {
+              return true;
+            }
+          }
+
+          if ((this.Table[0][0] == joueur) && (this.Table[1][1] == joueur) && (this.Table[2][2] == joueur)) {
+            return true;
+          }
+          if ((this.Table[2][0] == joueur) && (this.Table[1][1] == joueur) && (this.Table[0][2] == joueur)) {
+            return true;
+          }
+
+          return false;
+        }
+      }
+
+      function Tour(){
+        if (joueur == 1) {
+          joueur = 2;
+        }
+        else {
+          joueur = 1;
+        }
+
       }
 
       table = new Tableau();
-      table.PoserElement(Joueur, 2, 2
+      table.PoserElement(Joueur, 2, 2);
 
     </script>
   </body>
