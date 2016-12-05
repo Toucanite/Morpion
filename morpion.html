@@ -5,13 +5,20 @@
     <title>Morpion</title>
   </head>
   <body>
+    <img id="Grille" src="MorpionGrille.png" onload="Affichage()">
+    <div class="">
+
+    </div>
     <script type="text/javascript">
       Joueur = 1;
+
 
       class Tableau {
         constructor() {
           this.largeur = 3;
           this.hauteur = 3;
+          this.element = document.getElementById("Grille");
+          this.element.style.position = "absolute";
 
           // Création de la table
           this.Table = [];
@@ -62,6 +69,22 @@
 
           return false;
         }
+
+        AffichageElement(){
+          var hauteurFenetre = window.innerHeight;
+          var largeurFenetre = window.innerWidth;
+
+
+          this.element.style.left = (largeurFenetre/2)-this.element.style.width;
+          this.element.style.top = (hauteurFenetre/2)-this.element.style.height;
+        }
+      }
+
+      table = new Tableau();
+
+
+      function Affichage(){
+          setInterval(table.AffichageElement, 100);
       }
 
       function Tour(){
@@ -71,12 +94,12 @@
         else {
           joueur = 1;
         }
-
       }
 
-      table = new Tableau();
+
       table.PoserElement(Joueur, 2, 2);
 
     </script>
+
   </body>
 </html>
