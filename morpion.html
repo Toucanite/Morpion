@@ -6,7 +6,40 @@
   </head>
   <body>
     <script type="text/javascript">
-      
+      Joueur = 1;
+
+      class Tableau {
+        constructor() {
+          this.largeur = 3;
+          this.hauteur = 3;
+
+          // Création de la table
+          this.Table = [];
+          for (var i = 0; i < this.largeur; i++) {
+            this.Table[i] = [];
+            for (var y = 0; y < this.hauteur; y++) {
+              this.Table[i][y] = 0;
+            }
+          }
+        }
+
+        ClearTable(){
+          for (var i = 0; i < this.largeur; i++) {
+            for (var y = 0; y < this.hauteur; y++) {
+              this.Table[i][y] = 0;
+            }
+          }
+        }
+
+        PoserElement(joueur, posL, posH){
+          this.Table[posL][posH] = joueur;
+        }
+
+      }
+
+      table = new Tableau();
+      table.PoserElement(Joueur, 2, 2
+
     </script>
   </body>
 </html>
