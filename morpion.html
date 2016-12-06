@@ -6,7 +6,7 @@
   </head>
   <body>
         <!--TODO Faire les elements de manière dynamique-->
-    <!--<img id="Grille" src="MorpionGrille.png" onload="Affichage()">
+        <!--<img id="Grille" src="MorpionGrille.png" onload="Affichage()">
     <div class="">
 
     </div>-->
@@ -18,8 +18,13 @@
         constructor() {
           this.largeur = 3;
           this.hauteur = 3;
-          this.element = document.getElementById("Grille");
-          this.element.style.position = "absolute";
+
+          this.element = document.createElement("IMG");
+          var src = document.createAttribute("src");
+          src.value = "MorpionGrille.png";
+          this.element.setAttributeNode(src);
+          //this.element.style.position = "absolute";
+          document.body.appendChild(this.element);
 
           // Création de la table
           this.Table = [];
