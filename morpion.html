@@ -5,11 +5,6 @@
     <title>Morpion</title>
   </head>
   <body>
-        <!--TODO Faire les elements de manière dynamique-->
-        <!--<img id="Grille" src="MorpionGrille.png" onload="Affichage()">
-    <div class="">
-
-    </div>-->
     <script type="text/javascript">
       Joueur = 1;
 
@@ -19,12 +14,12 @@
           this.largeur = 3;
           this.hauteur = 3;
 
-          this.element = document.createElement("IMG");
-          var src = document.createAttribute("src");
-          src.value = "MorpionGrille.png";
-          this.element.setAttributeNode(src);
+          var grille = document.createElement("IMG");
+          grille.src = "MorpionGrille.png";
+          grille.id = "Grille";
           //this.element.style.position = "absolute";
-          document.body.appendChild(this.element);
+          document.body.appendChild(grille);
+          this.element = document.getElementById("Grille");
 
           // Création de la table
           this.Table = [];
@@ -81,24 +76,23 @@
           var largeurFenetre = window.innerWidth;
 
 
-          this.element.style.left = (largeurFenetre/2)-this.element.style.width;
-          this.element.style.top = (hauteurFenetre/2)-this.element.style.height;
+          this.element.style.left = (largeurFenetre/2)-this.element.style.width + "px";
+          this.element.style.top = (hauteurFenetre/2)-this.element.style.height + "px";
         }
       }
 
-      table = new Tableau();
-
-
+      var table = new Tableau();
+      Affichage();
       function Affichage(){
           setInterval(table.AffichageElement, 100);
       }
 
       function Tour(){
-        if (joueur == 1) {
-          joueur = 2;
+        if (Joueur == 1) {
+          Joueur = 2;
         }
         else {
-          joueur = 1;
+          Joueur = 1;
         }
       }
 
