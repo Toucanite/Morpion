@@ -8,6 +8,43 @@
     <script type="text/javascript">
       Joueur = 1;
 
+      function CreateurImg(Id, Src, Emplacement = document.body){
+        var img = document.createElement("IMG");
+        img.id = Id;
+        img.src = Src;
+
+        if (typeof(Emplacement) !== "string") {
+          Emplacement.appendChild(img);
+        }
+        else {
+          document.getElementById(Emplacement).appendChild(img);
+        }
+
+        return document.getElementById(Id);
+      }
+
+      function CreateurDiv(Id, Emplacement = document.body){
+        var div = document.createElement("DIV");
+        div.id = Id;
+
+        if (typeof(Emplacement) !== "string") {
+          Emplacement.appendChild(div);
+        }
+        else {
+          document.getElementById(Emplacement).appendChild(div);
+        }
+
+        return document.getElementById(Id);
+      }
+
+      var tableau = {
+        grille: CreateurImg("Grille", "MorpionGrille.png"),
+        table:  [[0,0,0],
+                [0,0,0],
+                [0,0,0]],
+        left: this.grille.style.left,
+        top: this.grille.style.top
+      };
 
       class Tableau {
         constructor() {
