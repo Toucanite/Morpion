@@ -43,56 +43,25 @@
                 [0,0,0],
                 [0,0,0]],
         left: this.grille.style.left,
-        top: this.grille.style.top
-      };
-
-      class Tableau {
-        constructor() {
-          this.largeur = 3;
-          this.hauteur = 3;
-
-          var grille = document.createElement("IMG");
-          grille.src = "MorpionGrille.png";
-          grille.id = "Grille";
-          //this.element.style.position = "absolute";
-          document.body.appendChild(grille);
-          this.element = document.getElementById("Grille");
-
-          // Création de la table
-          this.Table = [];
-          for (var i = 0; i < this.largeur; i++) {
-            this.Table[i] = [];
-            for (var y = 0; y < this.hauteur; y++) {
-              this.Table[i][y] = 0;
+        top: this.grille.style.top,
+        ClearTable: function(){
+          for (var i = 0; i < this.table.length; i++) {
+            for (var y = 0; y < this.table[i].length; y++) {
+              array[i][y] = 0;
             }
           }
-        }
-
-        ClearTable(){
-          for (var i = 0; i < this.largeur; i++) {
-            for (var y = 0; y < this.hauteur; y++) {
-              this.Table[i][y] = 0;
-            }
-          }
-        }
-
-        PoserElement(joueur, posL, posH){
-          this.Table[posL][posH] = joueur;
-        }
-
-        /*
-        * Returne True si le joueur à gagné
-        * @param {[int]} joueur Le joueur dont vous voulez vérifiez la victoire
-        * @return {[bool]}
-         */
-        CheckVictoire(joueur){
-          for (var i = 0; i < this.largeur; i++) {
+        },
+        PoserJeton: function(x,y,joueur){
+          this.table[x][y] = joueur;
+        },
+        CheckVictoire: function(joueur){
+          for (var i = 0; i < this.table.length; i++) {
             if ((this.Table[i][0] == joueur) && (this.Table[i][1] == joueur) && (this.Table[i][2] == joueur)) {
               return true;
             }
           }
 
-          for (var i = 0; i < this.hauteur; i++) {
+          for (var i = 0; i < this.table.length; i++) {
             if ((this.Table[0][i] == joueur) && (this.Table[1][i] == joueur) && (this.Table[2][i] == joueur)) {
               return true;
             }
@@ -107,24 +76,19 @@
 
           return false;
         }
+      };
 
-        AffichageElement(){
-          var hauteurFenetre = window.innerHeight;
-          var largeurFenetre = window.innerWidth;
+      function DetermineEtPlace(element){
+        tableau.PoserJeton(Number(element.id.replace("img", "")[0]), Number(element.id.replace("img", "")[1]), Joueur);
+      }
 
-
-          this.element.style.left = (largeurFenetre/2)-this.element.style.width + "px";
-          this.element.style.top = (hauteurFenetre/2)-this.element.style.height + "px";
+      for (var i = 0; i < tableau.table.length; i++) {
+        for (var y = 0; y < tableau.table[i].length; y++) {
+          CreateurImg("img"+i.toString()+y.toString(), "").onclick = "DetermineEtPlace(this)";
         }
       }
 
-      var table = new Tableau();
-      Affichage();
-      function Affichage(){
-          setInterval(table.AffichageElement, 100);
-      }
-
-      function Tour(){
+      function TourSuivant(){
         if (Joueur == 1) {
           Joueur = 2;
         }
@@ -132,9 +96,6 @@
           Joueur = 1;
         }
       }
-
-
-      table.PoserElement(Joueur, 2, 2);
 
     </script>
 
