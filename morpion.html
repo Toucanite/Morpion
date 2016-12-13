@@ -3,89 +3,113 @@
   <head>
     <meta charset="utf-8">
     <title>Morpion</title>
+    <style media="screen">
+      *{
+        position: absolute;
+      }
+      #div00{
+        background-color: yellow;
+      }
+      #div01{
+        background-color: blue;
+      }
+      #div02{
+        background-color: red;
+      }
+      #div10{
+        background-color: green;
+      }
+      #div11{
+        background-color: lime;
+      }
+      #div12{
+        background-color: deeppink;
+      }
+    </style>
   </head>
   <body>
+    <img src="MorpionGrille.png" id="Grille" />
+    <div id="div00">
+      <img src="" />
+    </div>
+    <div id="div01">
+      <img src="" />
+    </div>
+    <div id="div02">
+      <img src="" />
+    </div>
+    <div id="div10">
+      <img src="" />
+    </div>
+    <div id="div11">
+      <img src="" />
+    </div>
+    <div id="div12">
+      <img src="" />
+    </div>
+    <div id="div20">
+      <img src="" />
+    </div>
+    <div id="div21">
+      <img src="" />
+    </div>
+    <div id="div22">
+      <img src="" />
+    </div>
     <script type="text/javascript">
       Joueur = 1;
 
-      function CreateurImg(Id, Src, Emplacement = document.body){
-        var img = document.createElement("IMG");
-        img.id = Id;
-        img.src = Src;
-
-        if (typeof(Emplacement) !== "string") {
-          Emplacement.appendChild(img);
-        }
-        else {
-          document.getElementById(Emplacement).appendChild(img);
-        }
-
-        return document.getElementById(Id);
-      }
-
-      function CreateurDiv(Id, Emplacement = document.body){
-        var div = document.createElement("DIV");
-        div.id = Id;
-
-        if (typeof(Emplacement) !== "string") {
-          Emplacement.appendChild(div);
-        }
-        else {
-          document.getElementById(Emplacement).appendChild(div);
-        }
-
-        return document.getElementById(Id);
-      }
-
       var tableau = {
-        grille: CreateurImg("Grille", "MorpionGrille.png"),
+        element: document.getElementById("Grille"),
         table:  [[0,0,0],
                 [0,0,0],
-                [0,0,0]],
-        left: this.grille.style.left,
-        top: this.grille.style.top,
-        ClearTable: function(){
-          for (var i = 0; i < this.table.length; i++) {
-            for (var y = 0; y < this.table[i].length; y++) {
-              array[i][y] = 0;
-            }
-          }
-        },
-        PoserJeton: function(x,y,joueur){
-          this.table[x][y] = joueur;
-        },
-        CheckVictoire: function(joueur){
-          for (var i = 0; i < this.table.length; i++) {
-            if ((this.Table[i][0] == joueur) && (this.Table[i][1] == joueur) && (this.Table[i][2] == joueur)) {
-              return true;
-            }
-          }
-
-          for (var i = 0; i < this.table.length; i++) {
-            if ((this.Table[0][i] == joueur) && (this.Table[1][i] == joueur) && (this.Table[2][i] == joueur)) {
-              return true;
-            }
-          }
-
-          if ((this.Table[0][0] == joueur) && (this.Table[1][1] == joueur) && (this.Table[2][2] == joueur)) {
-            return true;
-          }
-          if ((this.Table[2][0] == joueur) && (this.Table[1][1] == joueur) && (this.Table[0][2] == joueur)) {
-            return true;
-          }
-
-          return false;
-        }
+                [0,0,0]]
       };
 
-      function DetermineEtPlace(element){
-        tableau.PoserJeton(Number(element.id.replace("img", "")[0]), Number(element.id.replace("img", "")[1]), Joueur);
+      function CheckVictoire(joueur){
+        for (var i = 0; i < tableau.table.length; i++) {
+          if ((tableau.table[i][0] == joueur) && (tableau.table[i][1] == joueur) && (tableau.table[i][2] == joueur)) {
+            return true;
+          }
+        }
+
+        for (var i = 0; i < tableau.table.length; i++) {
+          if ((tableau.table[0][i] == joueur) && (tableau.table[1][i] == joueur) && (tableau.table[2][i] == joueur)) {
+            return true;
+          }
+        }
+
+        if ((tableau.table[0][0] == joueur) && (tableau.table[1][1] == joueur) && (tableau.table[2][2] == joueur)) {
+          return true;
+        }
+        if ((tableau.table[2][0] == joueur) && (tableau.table[1][1] == joueur) && (tableau.table[0][2] == joueur)) {
+          return true;
+        }
+
+        return false;
       }
 
-      for (var i = 0; i < tableau.table.length; i++) {
-        for (var y = 0; y < tableau.table[i].length; y++) {
-          CreateurImg("img"+i.toString()+y.toString(), "").onclick = "DetermineEtPlace(this)";
+      function PoserJeton(x,y,joueur){
+        tableau.table[x][y] = joueur;
+      }
+
+      function ClearTable(){
+        for (var i = 0; i < tableau.table.length; i++) {
+          for (var y = 0; y < tableau.table[i].length; y++) {
+            tableau.table[i][y] = 0;
+          }
         }
+      }
+
+      function a(){
+        largeurTable = tableau.element.style.width;
+        hauteurTable = tableau.element.style.height;
+
+        tableau.element.style.left = ((window.innerWidth / 2) - largeurTable) + "px" ;
+        tableau.element.style.height = ((window.innerHeight / 2) - hauteurTable) + "px" ;
+
+
+
       }
 
       function TourSuivant(){
@@ -97,6 +121,7 @@
         }
       }
 
+      setInterval(a(), 100);
     </script>
 
   </body>
