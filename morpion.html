@@ -101,12 +101,12 @@
         }
       }
 
-      function a(){
+      function affiche(){
         largeurTable = tableau.element.style.width;
         hauteurTable = tableau.element.style.height;
 
         tableau.element.style.left = ((window.innerWidth / 2) - largeurTable) + "px" ;
-        tableau.element.style.height = ((window.innerHeight / 2) - hauteurTable) + "px" ;
+        tableau.element.style.top = ((window.innerHeight / 2) - hauteurTable) + "px" ;
 
 
 
@@ -121,7 +121,11 @@
         }
       }
 
-      setInterval(a(), 100);
+      setInterval(affiche, 100);
+      CheckVictoire(Joueur);
+      TourSuivant();
+      CheckVictoire(Joueur);
+      ClearTable();
     </script>
 
   </body>
