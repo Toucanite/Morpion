@@ -37,9 +37,8 @@
           tableau.cases[i][y] = document.getElementById("Case"+i+y);
         }
       }
-
       function CheckEgalite(){
-        cpt = 1;
+        cpt = 0;
         for (var i = 0; i < tableau.table.length; i++) {
           for (var y = 0; y < tableau.table[i].length; y++) {
             if (tableau.table[i][y] != 0) {
@@ -48,38 +47,39 @@
           }
         }
         if (cpt>=9) {
-          return true;
-        }
-        else {
-          return false;
+          setTimeout(function(){alert("Il y a égalité !")}, 100);
+          setTimeout(Reinitialisation, 3000);
         }
       }
 
       function CheckVictoire(){
-        if (!CheckEgalite) {
-          for (var i = 0; i < tableau.table.length; i++) {
-            if ((tableau.table[i][0] == Joueur) && (tableau.table[i][1] == Joueur) && (tableau.table[i][2] == Joueur)) {
-              Victoire(tableau.cases[i][0],tableau.cases[i][1],tableau.cases[i][2]);
-            }
+        for (var i = 0; i < tableau.table.length; i++) {
+          if ((tableau.table[i][0] == Joueur) && (tableau.table[i][1] == Joueur) && (tableau.table[i][2] == Joueur)) {
+            Victoire(tableau.cases[i][0],tableau.cases[i][1],tableau.cases[i][2]);
           }
+        }
 
-          for (var i = 0; i < tableau.table.length; i++) {
-            if ((tableau.table[0][i] == Joueur) && (tableau.table[1][i] == Joueur) && (tableau.table[2][i] == Joueur)) {
-              Victoire(tableau.cases[0][i],tableau.cases[1][i],tableau.cases[2][i]);
-            }
+        for (var i = 0; i < tableau.table.length; i++) {
+          if ((tableau.table[0][i] == Joueur) && (tableau.table[1][i] == Joueur) && (tableau.table[2][i] == Joueur)) {
+            Victoire(tableau.cases[0][i],tableau.cases[1][i],tableau.cases[2][i]);
           }
+        }
 
-          if ((tableau.table[0][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[2][2] == Joueur)) {
-            Victoire(tableau.cases[0][0],tableau.cases[1][1],tableau.cases[2][2]);
-          }
-          if ((tableau.table[2][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[0][2] == Joueur)) {
-            Victoire(tableau.table[2][0],tableau.table[1][1],tableau.table[0][2]);
-          }
+        if ((tableau.table[0][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[2][2] == Joueur)) {
+          Victoire(tableau.cases[0][0],tableau.cases[1][1],tableau.cases[2][2]);
+        }
+        if ((tableau.table[2][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[0][2] == Joueur)) {
+          Victoire(tableau.cases[2][0],tableau.cases[1][1],tableau.cases[0][2]);
+        }
+        else {
+          CheckEgalite();
         }
       }
 
       function Reinitialisation(){
-        clearInterval(casesVictoire);
+        if (casesVictoire != undefined) {
+          clearInterval(casesVictoire);
+        }
         ClearTable();
         Joueur = 1;
         afficheCases();
