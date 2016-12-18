@@ -7,64 +7,65 @@
       *{
         position: absolute;
       }
-      #div00{
+      #Main{
+        width: inherit;;
+      }
+      #Grille{
+        width: 600px;
+        height: 600px;
+        visibility: visible;
+      }
+      #Case00{
         background-color: yellow;
       }
-      #div01{
+      #Case01{
         background-color: blue;
       }
-      #div02{
+      #Case02{
         background-color: red;
       }
-      #div10{
+      #Case10{
         background-color: green;
       }
-      #div11{
+      #Case11{
         background-color: lime;
       }
-      #div12{
+      #Case12{
         background-color: deeppink;
       }
     </style>
   </head>
   <body>
-    <img onload="setInterval(affiche, 200)" src="MorpionGrille.png" id="Grille" />
-    <div id="div00">
-      <img src="" />
-    </div>
-    <div id="div01">
-      <img src="" />
-    </div>
-    <div id="div02">
-      <img src="" />
-    </div>
-    <div id="div10">
-      <img src="" />
-    </div>
-    <div id="div11">
-      <img src="" />
-    </div>
-    <div id="div12">
-      <img src="" />
-    </div>
-    <div id="div20">
-      <img src="" />
-    </div>
-    <div id="div21">
-      <img src="" />
-    </div>
-    <div id="div22">
-      <img src="" />
+    <div id="Main">
+      <img onload="setInterval(affiche, 100)" src="MorpionGrille.png" id="Grille" />
+      <img id="Case00" src="Croix.png" alt=""/>
+      <img id="Case01" src="Croix.png" alt=""/>
+      <img id="Case02" src="Croix.png" alt=""/>
+      <img id="Case10" src="Croix.png" alt=""/>
+      <img id="Case11" src="Croix.png" alt=""/>
+      <img id="Case12" src="Croix.png" alt=""/>
+      <img id="Case20" src="Croix.png" alt=""/>
+      <img id="Case21" src="Croix.png" alt=""/>
+      <img id="Case22" src="Croix.png" alt=""/>
     </div>
     <script type="text/javascript">
       Joueur = 1;
 
       var tableau = {
         element: document.getElementById("Grille"),
-        table:  [[0,0,0],
+        cases: [[],
+                [],
+                []],
+        table: [[0,0,0],
                 [0,0,0],
                 [0,0,0]]
       };
+
+      for (var i = 0; i < tableau.cases.length; i++) {
+        for (var y = 0; y < tableau.cases[i].length; y++) {
+          tableau.cases[i][y] = document.getElementById("Case"+i+y);
+        }
+      }
 
       function CheckVictoire(joueur){
         for (var i = 0; i < tableau.table.length; i++) {
@@ -105,30 +106,24 @@
         var largeurTable = document.getElementById("Grille").width;
         var hauteurTable = document.getElementById("Grille").height;
 
-        document.getElementById("div00").width = (largeurTable/3) + "px";
-        document.getElementById("div00").height = (hauteurTable/3) + "px";
-        document.getElementById("div01").width = largeurTable/3 + "px";
-        document.getElementById("div01").height = hauteurTable/3 + "px";
-        document.getElementById("div02").width = largeurTable/3 + "px";
-        document.getElementById("div02").height = hauteurTable/3 + "px";
-        document.getElementById("div10").width = largeurTable/3 + "px";
-        document.getElementById("div10").height = hauteurTable/3 + "px";
-        document.getElementById("div11").width = largeurTable/3 + "px";
-        document.getElementById("div11").height = hauteurTable/3 + "px";
-        document.getElementById("div12").width = largeurTable/3 + "px";
-        document.getElementById("div12").height = hauteurTable/3 + "px";
-        document.getElementById("div20").width = largeurTable/3 + "px";
-        document.getElementById("div20").height = hauteurTable/3 + "px";
-        document.getElementById("div21").width = largeurTable/3 + "px";
-        document.getElementById("div21").height = hauteurTable/3 + "px";
-        document.getElementById("div22").width = largeurTable/3 + "px";
-        document.getElementById("div22").height = hauteurTable/3 + "px";
+        for (i = 0; i < 3; i++) {
+          for (y = 0; y < 3; y++) {
+            name = "Case"+i+y;
+            document.getElementById(name).width =  "300px";
+            document.getElementById(name).height = "300px";
+          }
+        }
 
-        tableau.element.style.left = ((window.innerWidth / 2) - (largeurTable /2)) + "px" ;
-        tableau.element.style.top = ((window.innerHeight / 2) - (hauteurTable /2)) + "px" ;
+        for (var element in tableau.cases) {
+          element.width = "300px";
+          element.height = "300px";
+        }
 
-        document.getElementById("div00").style.left = tableau.element.style.left + "px";
-        document.getElementById("div00").style.top = tableau.element.style.top + "px";
+        tableau.element.style.left = (Math.floor((window.innerWidth / 2)) - Math.floor((largeurTable /2))) + "px" ;
+        tableau.element.style.top = (Math.floor((window.innerHeight / 2)) - Math.floor((hauteurTable /2))) + "px" ;
+
+        document.getElementById("Case00").style.left = tableau.element.style.left + "px";
+        document.getElementById("Case00").style.top = tableau.element.style.top + "px";
 
       }
 
