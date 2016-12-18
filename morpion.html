@@ -15,38 +15,20 @@
         height: 600px;
         visibility: visible;
       }
-      #Case00{
-        background-color: yellow;
-      }
-      #Case01{
-        background-color: blue;
-      }
-      #Case02{
-        background-color: red;
-      }
-      #Case10{
-        background-color: green;
-      }
-      #Case11{
-        background-color: lime;
-      }
-      #Case12{
-        background-color: deeppink;
-      }
     </style>
   </head>
   <body>
     <div id="Main">
       <img onload="setInterval(affiche, 100)" src="MorpionGrille.png" id="Grille" />
-      <img id="Case00" src="Croix.png" alt="">
-      <img id="Case01" src="Croix.png" alt="">
-      <img id="Case02" src="Croix.png" alt="">
-      <img id="Case10" src="Croix.png" alt="">
-      <img id="Case11" src="Croix.png" alt="">
-      <img id="Case12" src="Croix.png" alt="">
-      <img id="Case20" src="Croix.png" alt="">
-      <img id="Case21" src="Croix.png" alt="">
-      <img id="Case22" src="Croix.png" alt="">
+      <img id="Case00" src="" alt="">
+      <img id="Case01" src="" alt="">
+      <img id="Case02" src="" alt="">
+      <img id="Case10" src="" alt="">
+      <img id="Case11" src="" alt="">
+      <img id="Case12" src="" alt="">
+      <img id="Case20" src="" alt="">
+      <img id="Case21" src="" alt="">
+      <img id="Case22" src="" alt="">
     </div>
     <script type="text/javascript">
       Joueur = 1;
@@ -92,12 +74,31 @@
 
       function PoserJeton(x,y,joueur){
         tableau.table[x][y] = joueur;
+        TourSuivant();
+        afficheCases();
       }
 
       function ClearTable(){
         for (var i = 0; i < tableau.table.length; i++) {
           for (var y = 0; y < tableau.table[i].length; y++) {
             tableau.table[i][y] = 0;
+          }
+        }
+      }
+
+      function afficheCases(){
+        for (var i = 0; i < tableau.table.length; i++) {
+          for (var y = 0; y < tableau.table[i].length; y++) {
+            switch (tableau.table[i][y]) {
+              case 1:
+                tableau.cases[i][y].src = "Croix.png";
+                break;
+              case 2:
+                tableau.cases[i][y].src = "Cercle.png";
+                break;
+              default:
+                tableau.cases[i][y].src = "";
+            };
           }
         }
       }
@@ -114,6 +115,7 @@
 
         for (i = 0; i < 3; i++) {
           for (y = 0; y < 3; y++) {
+            tableau.cases[i][y].onclick = PoserJeton(i, y, Joueur);
             tableau.cases[i][y].width = largeurTable/3;
             tableau.cases[i][y].height = largeurTable/3;
             switch (i) {
@@ -142,22 +144,6 @@
           }
         }
 
-        /*document.getElementById("Case00").style.left = posTableLeft+"px";
-        document.getElementById("Case00").style.top = posTableTop+"px";
-        document.getElementById("Case01").style.left = (posTableLeft + tableau.element.width/3)+"px";
-        document.getElementById("Case01").style.top = posTableTop+"px";
-        document.getElementById("Case02").style.left = (posTableLeft + tableau.element.width/3*2)+"px";
-        document.getElementById("Case02").style.top = posTableTop+"px";
-
-        document.getElementById("Case10").style.left = (posTableLeft)+"px";
-        document.getElementById("Case10").style.top = (posTableTop + tableau.element.height/3)+"px";
-        document.getElementById("Case11").style.left = (posTableLeft + tableau.element.width/3)+"px";
-        document.getElementById("Case11").style.top = (posTableTop + tableau.element.height/3)+"px";
-        document.getElementById("Case12").style.left = (posTableLeft + tableau.element.width/3*2)+"px";
-        document.getElementById("Case12").style.top = (posTableTop + tableau.element.height/3)+"px";*/
-
-
-
       }
 
       function TourSuivant(){
@@ -168,12 +154,6 @@
           Joueur = 1;
         }
       }
-
-      //setInterval(affiche, 100);
-      CheckVictoire(Joueur);
-      TourSuivant();
-      CheckVictoire(Joueur);
-      ClearTable();
     </script>
 
   </body>
