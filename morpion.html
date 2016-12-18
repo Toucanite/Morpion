@@ -3,19 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Morpion</title>
-    <style media="screen">
-      *{
-        position: absolute;
-      }
-      #Main{
-        width: inherit;;
-      }
-      #Grille{
-        width: 600px;
-        height: 600px;
-        visibility: visible;
-      }
-    </style>
+    <link rel="stylesheet" href="css/StyleMorpion.css">
   </head>
   <body>
     <div id="Main">
@@ -50,24 +38,43 @@
         }
       }
 
+      function CheckEgalite(){
+        cpt = 1;
+        for (var i = 0; i < tableau.table.length; i++) {
+          for (var y = 0; y < tableau.table[i].length; y++) {
+            if (tableau.table[i][y] != 0) {
+              cpt++;
+            }
+          }
+        }
+        if (cpt>=9) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      }
+
       function CheckVictoire(){
-        for (var i = 0; i < tableau.table.length; i++) {
-          if ((tableau.table[i][0] == Joueur) && (tableau.table[i][1] == Joueur) && (tableau.table[i][2] == Joueur)) {
-            Victoire(tableau.cases[i][0],tableau.cases[i][1],tableau.cases[i][2]);
+        if (!CheckEgalite) {
+          for (var i = 0; i < tableau.table.length; i++) {
+            if ((tableau.table[i][0] == Joueur) && (tableau.table[i][1] == Joueur) && (tableau.table[i][2] == Joueur)) {
+              Victoire(tableau.cases[i][0],tableau.cases[i][1],tableau.cases[i][2]);
+            }
           }
-        }
 
-        for (var i = 0; i < tableau.table.length; i++) {
-          if ((tableau.table[0][i] == Joueur) && (tableau.table[1][i] == Joueur) && (tableau.table[2][i] == Joueur)) {
-            Victoire(tableau.cases[0][i],tableau.cases[1][i],tableau.cases[2][i]);
+          for (var i = 0; i < tableau.table.length; i++) {
+            if ((tableau.table[0][i] == Joueur) && (tableau.table[1][i] == Joueur) && (tableau.table[2][i] == Joueur)) {
+              Victoire(tableau.cases[0][i],tableau.cases[1][i],tableau.cases[2][i]);
+            }
           }
-        }
 
-        if ((tableau.table[0][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[2][2] == Joueur)) {
-          Victoire(tableau.cases[0][0],tableau.cases[1][1],tableau.cases[2][2]);
-        }
-        if ((tableau.table[2][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[0][2] == Joueur)) {
-          Victoire(tableau.table[2][0],tableau.table[1][1],tableau.table[0][2]);
+          if ((tableau.table[0][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[2][2] == Joueur)) {
+            Victoire(tableau.cases[0][0],tableau.cases[1][1],tableau.cases[2][2]);
+          }
+          if ((tableau.table[2][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[0][2] == Joueur)) {
+            Victoire(tableau.table[2][0],tableau.table[1][1],tableau.table[0][2]);
+          }
         }
       }
 
@@ -121,6 +128,7 @@
           for (var y = 0; y < tableau.table[i].length; y++) {
             tableau.table[i][y] = 0;
             tableau.cases[i][y].style.backgroundColor = "transparent";
+            tableau.cases[i][y].style.visiblity = "hidden";
           }
         }
       }
@@ -130,9 +138,11 @@
           for (var y = 0; y < tableau.table[i].length; y++) {
             switch (tableau.table[i][y]) {
               case 1:
+                tableau.cases[i][y].visiblity = "visible";
                 tableau.cases[i][y].src = "Croix.png";
                 break;
               case 2:
+                tableau.cases[i][y].visiblity = "visible";
                 tableau.cases[i][y].src = "Cercle.png";
                 break;
               default:
@@ -154,7 +164,6 @@
 
         for (i = 0; i < 3; i++) {
           for (y = 0; y < 3; y++) {
-            //tableau.cases[i][y].onclick = function(){};
             tableau.cases[i][y].width = largeurTable/3;
             tableau.cases[i][y].height = largeurTable/3;
             switch (i) {
@@ -182,7 +191,7 @@
             }
           }
         }
-        setInterval(affiche, 100);
+        window.addEventListener("resize", affiche);
       }
 
       function affiche(){
