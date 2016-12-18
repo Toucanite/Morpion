@@ -20,18 +20,19 @@
   <body>
     <div id="Main">
       <img onload="load()" src="MorpionGrille.png" id="Grille" />
-      <img id="Case00" src="" alt="">
-      <img id="Case01" src="" alt="">
-      <img id="Case02" src="" alt="">
-      <img id="Case10" src="" alt="">
-      <img id="Case11" src="" alt="">
-      <img id="Case12" src="" alt="">
-      <img id="Case20" src="" alt="">
-      <img id="Case21" src="" alt="">
-      <img id="Case22" src="" alt="">
+      <img id="Case00" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case01" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case02" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case10" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case11" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case12" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case20" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case21" src="" alt="" onclick="PoserJeton(this)">
+      <img id="Case22" src="" alt="" onclick="PoserJeton(this)">
     </div>
     <script type="text/javascript">
       Joueur = 1;
+      aJoue = false;
 
       var tableau = {
         element: document.getElementById("Grille"),
@@ -49,39 +50,77 @@
         }
       }
 
-      function CheckVictoire(joueur){
+      function CheckVictoire(){
         for (var i = 0; i < tableau.table.length; i++) {
-          if ((tableau.table[i][0] == joueur) && (tableau.table[i][1] == joueur) && (tableau.table[i][2] == joueur)) {
-            return true;
+          if ((tableau.table[i][0] == Joueur) && (tableau.table[i][1] == Joueur) && (tableau.table[i][2] == Joueur)) {
+            Victoire(tableau.cases[i][0],tableau.cases[i][1],tableau.cases[i][2]);
           }
         }
 
         for (var i = 0; i < tableau.table.length; i++) {
-          if ((tableau.table[0][i] == joueur) && (tableau.table[1][i] == joueur) && (tableau.table[2][i] == joueur)) {
-            return true;
+          if ((tableau.table[0][i] == Joueur) && (tableau.table[1][i] == Joueur) && (tableau.table[2][i] == Joueur)) {
+            Victoire(tableau.cases[0][i],tableau.cases[1][i],tableau.cases[2][i]);
           }
         }
 
-        if ((tableau.table[0][0] == joueur) && (tableau.table[1][1] == joueur) && (tableau.table[2][2] == joueur)) {
-          return true;
+        if ((tableau.table[0][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[2][2] == Joueur)) {
+          Victoire(tableau.cases[0][0],tableau.cases[1][1],tableau.cases[2][2]);
         }
-        if ((tableau.table[2][0] == joueur) && (tableau.table[1][1] == joueur) && (tableau.table[0][2] == joueur)) {
-          return true;
+        if ((tableau.table[2][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[0][2] == Joueur)) {
+          Victoire(tableau.table[2][0],tableau.table[1][1],tableau.table[0][2]);
         }
-
-        return false;
       }
 
-      function PoserJeton(x,y){
-        tableau.table[x][y] = Joueur;
-        TourSuivant();
+      function Reinitialisation(){
+        clearInterval(casesVictoire);
+        ClearTable();
+        Joueur = 1;
         afficheCases();
+        aJoue = false;
+      }
+
+      function Notification(){
+        alert("Joueur "+Joueur+" a remporté la victoire")
+      }
+
+      function Victoire(elm1, elm2, elm3){
+        flag = false;
+        function Clignoter(){
+          if (flag) {
+            elm1.style.backgroundColor = "red";
+            elm2.style.backgroundColor = "red";
+            elm3.style.backgroundColor = "red";
+          }
+          else {
+            elm1.style.backgroundColor = "transparent";
+            elm2.style.backgroundColor = "transparent";
+            elm3.style.backgroundColor = "transparent";
+          }
+          flag = !flag;
+        }
+        casesVictoire = setInterval(Clignoter, 250);
+        setTimeout(Notification, 1000);
+        setTimeout(Reinitialisation, 3000);
+      }
+
+      function PoserJeton(obj){
+        valXY = obj.id.replace("Case", "");
+        x = Number(valXY[0]);
+        y = Number(valXY[1]);
+        if ((tableau.table[x][y] == 0) && !aJoue) {
+          aJoue = true;
+          tableau.table[x][y] = Joueur;
+          afficheCases();
+          CheckVictoire();
+          setTimeout(TourSuivant, 800);
+        }
       }
 
       function ClearTable(){
         for (var i = 0; i < tableau.table.length; i++) {
           for (var y = 0; y < tableau.table[i].length; y++) {
             tableau.table[i][y] = 0;
+            tableau.cases[i][y].style.backgroundColor = "transparent";
           }
         }
       }
@@ -115,9 +154,7 @@
 
         for (i = 0; i < 3; i++) {
           for (y = 0; y < 3; y++) {
-            tableau.cases[i][y].onclick = function(){
-              PoserJeton(i,y);
-            };
+            //tableau.cases[i][y].onclick = function(){};
             tableau.cases[i][y].width = largeurTable/3;
             tableau.cases[i][y].height = largeurTable/3;
             switch (i) {
@@ -145,7 +182,7 @@
             }
           }
         }
-        setInterval(affiche(), 100);
+        setInterval(affiche, 100);
       }
 
       function affiche(){
@@ -194,6 +231,7 @@
         else {
           Joueur = 1;
         }
+        aJoue = false;
       }
     </script>
 
