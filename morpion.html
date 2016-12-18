@@ -19,7 +19,7 @@
   </head>
   <body>
     <div id="Main">
-      <img onload="setInterval(affiche, 100)" src="MorpionGrille.png" id="Grille" />
+      <img onload="load()" src="MorpionGrille.png" id="Grille" />
       <img id="Case00" src="" alt="">
       <img id="Case01" src="" alt="">
       <img id="Case02" src="" alt="">
@@ -72,8 +72,8 @@
         return false;
       }
 
-      function PoserJeton(x,y,joueur){
-        tableau.table[x][y] = joueur;
+      function PoserJeton(x,y){
+        tableau.table[x][y] = Joueur;
         TourSuivant();
         afficheCases();
       }
@@ -103,7 +103,7 @@
         }
       }
 
-      function affiche(){
+      function load(){
         var largeurTable = document.getElementById("Grille").width;
         var hauteurTable = document.getElementById("Grille").height;
 
@@ -115,7 +115,9 @@
 
         for (i = 0; i < 3; i++) {
           for (y = 0; y < 3; y++) {
-            tableau.cases[i][y].onclick = PoserJeton(i, y, Joueur);
+            tableau.cases[i][y].onclick = function(){
+              PoserJeton(i,y);
+            };
             tableau.cases[i][y].width = largeurTable/3;
             tableau.cases[i][y].height = largeurTable/3;
             switch (i) {
@@ -143,7 +145,46 @@
             }
           }
         }
+        setInterval(affiche(), 100);
+      }
 
+      function affiche(){
+        var largeurTable = document.getElementById("Grille").width;
+        var hauteurTable = document.getElementById("Grille").height;
+
+        tableau.element.style.left = (Math.floor((window.innerWidth / 2)) - Math.floor((largeurTable /2))) + "px" ;
+        tableau.element.style.top = (Math.floor((window.innerHeight / 2)) - Math.floor((hauteurTable /2))) + "px" ;
+
+        posTableLeft = parseInt(tableau.element.style.left);
+        posTableTop = parseInt(tableau.element.style.top);
+
+        for (i = 0; i < 3; i++) {
+          for (y = 0; y < 3; y++) {
+            switch (i) {
+              case 0:
+                tableau.cases[i][y].style.top = posTableTop+"px";
+                break;
+              case 1:
+                tableau.cases[i][y].style.top = (posTableTop + tableau.element.height/3)+"px";
+                break;
+              case 2:
+                tableau.cases[i][y].style.top = (posTableTop + tableau.element.height/3*2)+"px";
+                break;
+            }
+            switch (y) {
+              case 0:
+                tableau.cases[i][y].style.left = posTableLeft+"px";
+                break;
+              case 1:
+                tableau.cases[i][y].style.left = (posTableLeft + tableau.element.width/3)+"px";
+                break;
+              case 2:
+                tableau.cases[i][y].style.left = (posTableLeft + tableau.element.width/3*2)+"px";
+                break;
+
+            }
+          }
+        }
       }
 
       function TourSuivant(){
