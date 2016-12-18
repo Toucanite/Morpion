@@ -106,18 +106,57 @@
         var largeurTable = document.getElementById("Grille").width;
         var hauteurTable = document.getElementById("Grille").height;
 
-        for (i = 0; i < 3; i++) {
-          for (y = 0; y < 3; y++) {
-            tableau.cases[i][y].width = "300px";
-            tableau.cases[i][y].height = "300px";
-          }
-        }
-
         tableau.element.style.left = (Math.floor((window.innerWidth / 2)) - Math.floor((largeurTable /2))) + "px" ;
         tableau.element.style.top = (Math.floor((window.innerHeight / 2)) - Math.floor((hauteurTable /2))) + "px" ;
 
-        document.getElementById("Case00").style.left = tableau.element.style.left + "px";
-        document.getElementById("Case00").style.top = tableau.element.style.top + "px";
+        posTableLeft = parseInt(tableau.element.style.left);
+        posTableTop = parseInt(tableau.element.style.top);
+
+        for (i = 0; i < 3; i++) {
+          for (y = 0; y < 3; y++) {
+            tableau.cases[i][y].width = largeurTable/3;
+            tableau.cases[i][y].height = largeurTable/3;
+            switch (i) {
+              case 0:
+                tableau.cases[i][y].style.top = posTableTop+"px";
+                break;
+              case 1:
+                tableau.cases[i][y].style.top = (posTableTop + tableau.element.height/3)+"px";
+                break;
+              case 2:
+                tableau.cases[i][y].style.top = (posTableTop + tableau.element.height/3*2)+"px";
+                break;
+            }
+            switch (y) {
+              case 0:
+                tableau.cases[i][y].style.left = posTableLeft+"px";
+                break;
+              case 1:
+                tableau.cases[i][y].style.left = (posTableLeft + tableau.element.width/3)+"px";
+                break;
+              case 2:
+                tableau.cases[i][y].style.left = (posTableLeft + tableau.element.width/3*2)+"px";
+                break;
+
+            }
+          }
+        }
+
+        /*document.getElementById("Case00").style.left = posTableLeft+"px";
+        document.getElementById("Case00").style.top = posTableTop+"px";
+        document.getElementById("Case01").style.left = (posTableLeft + tableau.element.width/3)+"px";
+        document.getElementById("Case01").style.top = posTableTop+"px";
+        document.getElementById("Case02").style.left = (posTableLeft + tableau.element.width/3*2)+"px";
+        document.getElementById("Case02").style.top = posTableTop+"px";
+
+        document.getElementById("Case10").style.left = (posTableLeft)+"px";
+        document.getElementById("Case10").style.top = (posTableTop + tableau.element.height/3)+"px";
+        document.getElementById("Case11").style.left = (posTableLeft + tableau.element.width/3)+"px";
+        document.getElementById("Case11").style.top = (posTableTop + tableau.element.height/3)+"px";
+        document.getElementById("Case12").style.left = (posTableLeft + tableau.element.width/3*2)+"px";
+        document.getElementById("Case12").style.top = (posTableTop + tableau.element.height/3)+"px";*/
+
+
 
       }
 
