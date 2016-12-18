@@ -38,24 +38,24 @@
   <body>
     <div id="Main">
       <img onload="setInterval(affiche, 100)" src="MorpionGrille.png" id="Grille" />
-      <img id="Case00" src="Croix.png" alt=""/>
-      <img id="Case01" src="Croix.png" alt=""/>
-      <img id="Case02" src="Croix.png" alt=""/>
-      <img id="Case10" src="Croix.png" alt=""/>
-      <img id="Case11" src="Croix.png" alt=""/>
-      <img id="Case12" src="Croix.png" alt=""/>
-      <img id="Case20" src="Croix.png" alt=""/>
-      <img id="Case21" src="Croix.png" alt=""/>
-      <img id="Case22" src="Croix.png" alt=""/>
+      <img id="Case00" src="Croix.png" alt="">
+      <img id="Case01" src="Croix.png" alt="">
+      <img id="Case02" src="Croix.png" alt="">
+      <img id="Case10" src="Croix.png" alt="">
+      <img id="Case11" src="Croix.png" alt="">
+      <img id="Case12" src="Croix.png" alt="">
+      <img id="Case20" src="Croix.png" alt="">
+      <img id="Case21" src="Croix.png" alt="">
+      <img id="Case22" src="Croix.png" alt="">
     </div>
     <script type="text/javascript">
       Joueur = 1;
 
       var tableau = {
         element: document.getElementById("Grille"),
-        cases: [[],
-                [],
-                []],
+        cases: [[0,0,0],
+                [0,0,0],
+                [0,0,0]],
         table: [[0,0,0],
                 [0,0,0],
                 [0,0,0]]
@@ -108,15 +108,9 @@
 
         for (i = 0; i < 3; i++) {
           for (y = 0; y < 3; y++) {
-            name = "Case"+i+y;
-            document.getElementById(name).width =  "300px";
-            document.getElementById(name).height = "300px";
+            tableau.cases[i][y].width = "300px";
+            tableau.cases[i][y].height = "300px";
           }
-        }
-
-        for (var element in tableau.cases) {
-          element.width = "300px";
-          element.height = "300px";
         }
 
         tableau.element.style.left = (Math.floor((window.innerWidth / 2)) - Math.floor((largeurTable /2))) + "px" ;
