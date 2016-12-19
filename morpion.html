@@ -19,8 +19,9 @@
       <img id="Case22" src="" alt="" onclick="PoserJeton(this)">
     </div>
     <script type="text/javascript">
-      Joueur = 1;
+      Joueur = 2;
       aJoue = false;
+      aGagne = false;
 
       var tableau = {
         element: document.getElementById("Grille"),
@@ -37,43 +38,50 @@
           tableau.cases[i][y] = document.getElementById("Case"+i+y);
         }
       }
+
       function CheckEgalite(){
-        cpt = 0;
-        for (var i = 0; i < tableau.table.length; i++) {
-          for (var y = 0; y < tableau.table[i].length; y++) {
-            if (tableau.table[i][y] != 0) {
-              cpt++;
-            }
-          }
-        }
-        if (cpt>=9) {
-          setTimeout(function(){alert("Il y a égalité !")}, 100);
-          setTimeout(Reinitialisation, 3000);
-        }
+
       }
 
       function CheckVictoire(){
+        aGagne = false;
         for (var i = 0; i < tableau.table.length; i++) {
-          if ((tableau.table[i][0] == Joueur) && (tableau.table[i][1] == Joueur) && (tableau.table[i][2] == Joueur)) {
+          if ((tableau.table[i][0] == Joueur) && (tableau.table[i][1] == Joueur) && (tableau.table[i][2] == Joueur) && !aGagne) {
             Victoire(tableau.cases[i][0],tableau.cases[i][1],tableau.cases[i][2]);
+            aGagne = true;
           }
         }
 
         for (var i = 0; i < tableau.table.length; i++) {
-          if ((tableau.table[0][i] == Joueur) && (tableau.table[1][i] == Joueur) && (tableau.table[2][i] == Joueur)) {
+          if ((tableau.table[0][i] == Joueur) && (tableau.table[1][i] == Joueur) && (tableau.table[2][i] == Joueur) && !aGagne) {
             Victoire(tableau.cases[0][i],tableau.cases[1][i],tableau.cases[2][i]);
+            aGagne = true;
           }
         }
 
-        if ((tableau.table[0][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[2][2] == Joueur)) {
+        if ((tableau.table[0][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[2][2] == Joueur) && !aGagne) {
           Victoire(tableau.cases[0][0],tableau.cases[1][1],tableau.cases[2][2]);
+          aGagne = true;
         }
-        if ((tableau.table[2][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[0][2] == Joueur)) {
+        if ((tableau.table[2][0] == Joueur) && (tableau.table[1][1] == Joueur) && (tableau.table[0][2] == Joueur) && !aGagne) {
           Victoire(tableau.cases[2][0],tableau.cases[1][1],tableau.cases[0][2]);
+          aGagne = true;
         }
-        else {
-          CheckEgalite();
+        if (!aGagne) {
+          cpt = 0;
+          for (var i = 0; i < tableau.table.length; i++) {
+            for (var y = 0; y < tableau.table[i].length; y++) {
+              if (tableau.table[i][y] != 0) {
+                cpt++;
+              }
+            }
+          }
+          if (cpt>=9) {
+            setTimeout(function(){alert("Il y a égalité !")}, 100);
+            setTimeout(Reinitialisation, 3000);
+          }
         }
+        setTimeout(TourSuivant, 400);
       }
 
       function Reinitialisation(){
@@ -84,6 +92,7 @@
         Joueur = 1;
         afficheCases();
         aJoue = false;
+        aGagne = false;
       }
 
       function Notification(){
@@ -111,15 +120,16 @@
       }
 
       function PoserJeton(obj){
-        valXY = obj.id.replace("Case", "");
-        x = Number(valXY[0]);
-        y = Number(valXY[1]);
-        if ((tableau.table[x][y] == 0) && !aJoue) {
-          aJoue = true;
-          tableau.table[x][y] = Joueur;
-          afficheCases();
-          CheckVictoire();
-          setTimeout(TourSuivant, 800);
+        if (!aGagne) {
+          valXY = obj.id.replace("Case", "");
+          x = Number(valXY[0]);
+          y = Number(valXY[1]);
+          if ((tableau.table[x][y] == 0) && !aJoue) {
+            aJoue = true;
+            tableau.table[x][y] = Joueur;
+            afficheCases();
+            CheckVictoire();
+          }
         }
       }
 
